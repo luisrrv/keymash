@@ -1,0 +1,98 @@
+:root {
+  --hue: 30;
+  --ink: #2b2620;
+  --ink-soft: #6f665c;
+  --paper: hsl(var(--hue) 55% 94%);
+  --accent: hsl(var(--hue) 55% 48%);
+  --round: ui-rounded, 'SF Pro Rounded', 'Nunito', 'Arial Rounded MT Bold', system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; }
+
+html, body { height: 100%; }
+[hidden] { display: none !important; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--round);
+  transition: background-color .35s ease;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* --- Start screen (for the parent) --- */
+.start {
+  height: 100%;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 16px;
+  text-align: center;
+  padding: 24px;
+}
+.start h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); letter-spacing: -.02em; }
+.tagline { color: var(--ink-soft); font-size: 1.1rem; }
+.start button {
+  margin-top: 16px;
+  font: inherit;
+  font-size: 1.4rem;
+  padding: 14px 44px;
+  border-radius: 999px;
+  border: 0;
+  background: var(--ink);
+  color: #fff;
+  cursor: pointer;
+}
+.start button:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+.hint { color: var(--ink-soft); font-size: .9rem; max-width: 32ch; }
+
+/* --- Toddler view --- */
+.stage {
+  height: 100%;
+  display: grid;
+  place-items: center;
+  outline: none;
+}
+.card {
+  display: grid;
+  justify-items: center;
+  gap: 1.5vh;
+  animation: pop .38s cubic-bezier(.34, 1.56, .64, 1);
+}
+.glyph {
+  font-size: min(42vh, 40vw);
+  line-height: 1;
+  font-weight: 800;
+  color: var(--accent);
+}
+.emoji { font-size: min(18vh, 20vw); line-height: 1; }
+.word { font-size: min(8vh, 9vw); font-weight: 700; }
+
+.dots { display: flex; gap: min(4vh, 4vw); margin-top: 1vh; }
+.dot-group { display: flex; gap: min(1.6vh, 1.6vw); }
+.dot {
+  width: min(6vh, 6vw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: dot-in .25s ease-out both;
+  animation-delay: calc(var(--i) * 60ms);
+}
+
+@keyframes pop {
+  from { transform: scale(.6); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+@keyframes dot-in {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body { transition: none; }
+  .card { animation: fade .2s ease-out; }
+  .dot { animation: none; }
+  @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+}

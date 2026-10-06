@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="A keyboard toy for very small humans: press a letter or number to see and hear it." />
+    <meta name="theme-color" content="#f6f1ea" />
+    <title>keymash</title>
+  </head>
+  <body>
+    <main id="start" class="start">
+      <h1>keymash</h1>
+      <p class="tagline">a keyboard toy for very small humans</p>
+      <button id="start-button" type="button">start</button>
+      <p class="hint">Press start, turn the sound on, then hand over the keyboard.</p>
+    </main>
+    <main id="stage" class="stage" tabindex="-1" aria-live="polite" hidden></main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
