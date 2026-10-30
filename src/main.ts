@@ -3,30 +3,45 @@ import { ITEMS } from './content'
 import { keyFromEvent, shouldBlockDefault } from './input'
 import { render } from './view'
 import { createSpeaker } from './speech'
+import { createToddlerMode } from './parent'
 
 const stage = document.getElementById('stage')!
 const start = document.getElementById('start')!
 const startButton = document.getElementById('start-button') as HTMLButtonElement
+const exitHint = document.getElementById('exit-hint')!
 
 const speaker =
   'speechSynthesis' in window
     ? createSpeaker({ synth: window.speechSynthesis, makeUtterance: (t) => new SpeechSynthesisUtterance(t) })
     : null
 
-let started = false
+const toddler = createToddlerMode({
+  onExit() {
+    speaker?.stop()
+    stage.hidden = true
+    stage.replaceChildren()
+    exitHint.classList.remove('show')
+    start.hidden = false
+    startButton.textContent = 'start again'
+    startButton.focus()
+  },
+})
 
-// The parent presses start: this one click is the user gesture browsers
-// require before playing audio.
+// The parent presses start. This one click is the user gesture browsers
+// require for fullscreen, Keyboard Lock and audio, so all three happen here.
 startButton.addEventListener('click', () => {
-  started = true
   speaker?.unlock()
   start.hidden = true
   stage.hidden = false
   stage.focus()
+  void toddler.enter()
+  // A quiet reminder for the parent, gone after a few seconds.
+  exitHint.classList.add('show')
+  setTimeout(() => exitHint.classList.remove('show'), 4000)
 })
 
 window.addEventListener('keydown', (e) => {
-  if (!started) {
+  if (!toddler.isActive()) {
     // Let the parent use Enter/Space on the start button.
     return
   }

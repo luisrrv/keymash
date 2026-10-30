@@ -12,7 +12,11 @@
 html, body { height: 100%; }
 [hidden] { display: none !important; }
 
+html { overscroll-behavior: none; }
+
 body {
+  overscroll-behavior: none; /* no swipe-to-go-back from the trackpad */
+  touch-action: manipulation;
   background: var(--paper);
   color: var(--ink);
   font-family: var(--round);
@@ -96,3 +100,18 @@ body {
   .dot { animation: none; }
   @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
 }
+
+/* --- Toddler mode --- */
+.hide-cursor, .hide-cursor * { cursor: none !important; }
+.exit-hint {
+  position: fixed;
+  left: 50%;
+  bottom: 20px;
+  transform: translateX(-50%);
+  font-size: .85rem;
+  color: var(--ink-soft);
+  opacity: 0;
+  transition: opacity .6s ease;
+  pointer-events: none;
+}
+.exit-hint.show { opacity: .8; }
