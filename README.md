@@ -2,6 +2,8 @@
 
 A keyboard toy for very small humans. Press a letter or a number and it fills the screen, with a picture and a voice.
 
+**Live:** [keymash.netlify.app](https://keymash.netlify.app) · **Stack:** TypeScript · Vite · Web Speech API
+
 A two-year-old kept trying to use my keyboard, so I made the keyboard do something.
 
 ## How it behaves
